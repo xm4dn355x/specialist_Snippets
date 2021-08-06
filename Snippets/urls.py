@@ -15,13 +15,16 @@ Including another URLconf
 """
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib import admin
 from django.urls import path
 
 from MainApp import views
 
 urlpatterns = [
+    path('admin/', admin.site.urls),
     path('', views.index_page, name='index'),
     path('snippets/add', views.add_snippet_page, name='snippets_add'),
     path('snippets/list', views.snippets_page, name='snippets_list'),
+    path('snippets/<int:pk>', views.snippets_details, name='snippet_details'),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
