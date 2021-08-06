@@ -20,8 +20,8 @@ from django.urls import path
 from MainApp import views
 
 urlpatterns = [
-    path('', views.index_page),
-    path('snippets/add', views.add_snippet_page),
-    path('snippets/list', views.snippets_page),
+    path('', views.index_page, name='index'),
+    path('snippets/add', views.add_snippet_page, name='snippets_add'),
+    path('snippets/list', views.snippets_page, name='snippets_list'),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
