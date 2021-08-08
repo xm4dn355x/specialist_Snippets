@@ -11,35 +11,34 @@
         </div>
 
         <div class="row">
-            <div class="col-4 offset-2">
+            <div class="col-8 offset-2">
                 <h2>Список сниппетов:</h2>
+                <div class="col">
+                    <table class="table table-striped">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Название</th>
+                            <th scope="col">Дата создания</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        {% for snippet in snippets %}
+                            <tr>
+                                <td scope="row">{{ snippet.id }}</td>
+                                <td><a href="{% url 'snippet_details' snippet.id %}">{{ snippet.name }}</a></td>
+                                <td>{{ snippet.creation_date }}</td>
+                            </tr>
+                        {% endfor %}
+
+                        </tbody>
+                    </table>
+                    <div align="right">
+                        <i style="color: gray;">Всего сниппетов: {{ snippets.count }}</i>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-
-    <div class="col">
-        <table class="table table-striped">
-            <thead class="thead-dark">
-            <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Название</th>
-                <th scope="col">Дата создания</th>
-            </tr>
-            </thead>
-            <tbody>
-
-            {% for snippet in snippets %}
-                <tr>
-                    <td scope="row">{{ snippet.id }}</td>
-                    <td><a href="{% url 'snippet_details' snippet.id %}">{{ snippet.name }}</a></td>
-                    <td>{{ snippet.creation_date }}</td>
-                </tr>
-            {% endfor %}
-
-            </tbody>
-        </table>
-        <div align="right">
-            <i style="color: gray;">Всего сниппетов: 2</i>
         </div>
     </div>
 {% endblock %}
