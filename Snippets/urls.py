@@ -26,5 +26,6 @@ urlpatterns = [
     path('snippets/add', views.add_snippet_page, name='snippets_add'),
     path('snippets/list', views.snippets_page, name='snippets_list'),
     path('snippets/<int:pk>', views.snippets_details, name='snippet_details'),
+    path('form_data/>', views.form_data, name='form_data'),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
