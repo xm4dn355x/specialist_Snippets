@@ -1,17 +1,45 @@
+from django.contrib import auth
+from django.core.exceptions import PermissionDenied
 from django.http import Http404
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.csrf import csrf_protect
 
 from .models import Snippet
+from .forms import SnippetForm
 
 def index_page(request):
     context = {'pagename': 'PythonBin'}
     return render(request, 'pages/index.html', context)
 
 
+def login(request):
+    if request.method == 'POST':
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        user = auth.authenticate(request, username=username, password=password)
+        if user is not None:
+            auth.login(request, user)
+        else:
+            raise PermissionDenied
+    return redirect('/')
+
+
+def logout(request):
+    auth.logout(request)
+    return redirect('index')
+
+
 def add_snippet_page(request):
-    context = {'pagename': 'Добавление нового сниппета'}
-    return render(request, 'pages/add_snippet.html', context)
+    form = SnippetForm()
+    context = {'pagename': 'Добавление нового сниппета', 'form': form}
+    if request.method == 'GET':
+        return render(request, 'pages/add_snippet.html', context)
+    elif request.method == 'POST':
+        form = SnippetForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('snippets_list')
+        return render(request, 'pages/add_snippet.html', context)
 
 
 def snippets_page(request):
